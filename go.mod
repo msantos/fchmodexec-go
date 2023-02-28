@@ -1,4 +1,4 @@
-module fchmodexec
+module codeberg.org/msantos/fchmodexec
 
 go 1.19
 

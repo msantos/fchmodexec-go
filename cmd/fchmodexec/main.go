@@ -13,43 +13,18 @@ import (
 	"path"
 	"strconv"
 
+	"codeberg.org/msantos/fchmodexec"
 	"golang.org/x/sys/unix"
 )
 
 const (
-	version = "0.1.0"
+	version = "0.2.0"
 )
 
 func usage() {
 	fmt.Fprintf(os.Stderr, `%s %s
 Usage: <MODE> <FD> <...> -- <COMMAND> <...>
 `, path.Base(os.Args[0]), version)
-}
-
-func fdget(argv []string) ([]int, error) {
-	fds := make([]int, 0)
-
-	for _, v := range argv {
-		fd, err := strconv.Atoi(v)
-		if err != nil {
-			return fds, err
-		}
-		if _, err := unix.FcntlInt(uintptr(fd), unix.F_GETFD, 0); err != nil {
-			continue
-		}
-		fds = append(fds, fd)
-	}
-
-	return fds, nil
-}
-
-func fdset(fds []int, mode uint32) error {
-	for _, fd := range fds {
-		if err := unix.Fchmod(fd, uint32(mode)); err != nil {
-			return fmt.Errorf("%s: %w", fd, err)
-		}
-	}
-	return nil
 }
 
 func at(a []string, s string) int {
@@ -86,14 +61,14 @@ func main() {
 		os.Exit(2)
 	}
 
-	fds, err := fdget(os.Args[2:sep])
+	fds, err := fchmodexec.Get(os.Args[2:sep])
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		usage()
 		os.Exit(2)
 	}
 
-	if err := fdset(fds, uint32(mode)); err != nil {
+	if err := fchmodexec.Set(fds, uint32(mode)); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(2)
 	}
