@@ -28,7 +28,13 @@ None.
 # BUILDING
 
 ```
-go build
+go install codeberg.org/msantos/fchmodexec/cmd/fchmodexec@latest
+```
+
+To build a reproducible executable from the git repository:
+
+```
+CGO_ENABLED=0 go build -C cmd/fchmodexec -trimpath -ldflags "-w"
 ```
 
 # ALTERNATIVES
