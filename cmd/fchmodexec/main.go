@@ -13,7 +13,7 @@ import (
 	"path"
 	"strconv"
 
-	"codeberg.org/msantos/fchmodexec"
+	"codeberg.org/msantos/fchmodexec/pkg/fchmodexec"
 	"golang.org/x/sys/unix"
 )
 
