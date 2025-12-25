@@ -30,7 +30,7 @@ func Get(s []string) ([]int, error) {
 func Set(fds []int, mode uint32) error {
 	for _, fd := range fds {
 		if err := unix.Fchmod(fd, uint32(mode)); err != nil {
-			return fmt.Errorf("%s: %w", fd, err)
+			return fmt.Errorf("%d: %w", fd, err)
 		}
 	}
 	return nil
