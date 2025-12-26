@@ -28,7 +28,7 @@ None.
 # BUILDING
 
 ```
-go install codeberg.org/msantos/fchmodexec/cmd/fchmodexec@latest
+go install go.iscode.ca/fchmodexec/cmd/fchmodexec@latest
 ```
 
 To build a reproducible executable from the git repository:
